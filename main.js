@@ -21,12 +21,17 @@ var ball = {
     dy:3
 }
 
+rightWristY = 0;
+rightWristX = 0;
+scorerightWrist = 0;
+game_status = "";
+
 function setup(){
   var canvas =  createCanvas(700,600);
   canvas.parent('canvas');
   video = createCapture(VIDEO);
   video.size(700, 600);
-  video.hide();
+  //video.hide();
   poseNet = ml5.poseNet(video, modelLoaded);
   poseNet.on('pose', gotPoses);
 }
@@ -200,4 +205,24 @@ function paddleInCanvas(){
   if(mouseY < 0){
     mouseY =0;
   }  
+}
+
+function reset()
+{
+  ball.x = width / 2 + 100;
+  ball.y = height / 2 + 100;
+  ball.dx = 3;
+  ball.dy = 3;
+}
+
+function preload()
+{
+  ball_touch_paddle = loadSound("ball_touch_paddel.wav");
+  missed = loadSound("missed.wav");
+}
+
+function restart()
+{
+  pcscore = 0;
+  loop();
 }
